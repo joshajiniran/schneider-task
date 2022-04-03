@@ -2,7 +2,6 @@ import sys
 import xml.etree.ElementTree as ET
 
 import pandas as pd
-from fastkml import kml
 from pykml import parser
 from pykml.factory import nsmap
 
@@ -25,4 +24,15 @@ for place in root.Document.Folder.Placemark.LineString.coordinates[0].text.split
     places.add(place)
     
 
-print([coord for coord in places])
+# print([coord for coord in places])
+df_places = []
+for coord in places:
+    df_places.append({
+        'long': coord.split(",")[0],
+        'lat': coord.split(",")[1]
+    })
+
+
+# use pandas to make dataframe of the data in dictionary
+df = pd.DataFrame(data=df_places)
+print(df)
