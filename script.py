@@ -1,9 +1,7 @@
 import sys
 from dataclasses import dataclass
-from enum import unique
 
 import geopandas as gpd
-import pandas as pd
 from fiona.errors import DriverError
 from pykml import parser
 from pykml.factory import nsmap
@@ -43,5 +41,5 @@ df_points = [(float(coord.split(",")[0]), float(coord.split(",")[1])) for coord 
 geom = [Point(xy) for xy in df_points]
 gdf = gpd.GeoDataFrame(geometry=geom, crs="EPSG:4326")
 gdf.to_crs(epsg=32663, inplace=True)
-dis = gdf.distance(gdf.shift()).sum() / 1000
-print("{:.2f}km".format(dis))
+distance = gdf.distance(gdf.shift()).sum() / 1000
+print("{:.2f}km".format(distance))
